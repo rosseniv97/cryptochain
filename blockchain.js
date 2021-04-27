@@ -24,7 +24,7 @@ class Blockchain {
         }
         return chain
             .find((block, index) => index && ((block.lastHash !== chain[index - 1].hash) ||
-                (cryptoHash(block.data, block.lastHash, block.timestamp) !== block.hash))) ?
+                (cryptoHash(block.data, block.lastHash, block.timestamp, block.difficulty, block.nonce) !== block.hash))) ?
             false : true
 
     };
