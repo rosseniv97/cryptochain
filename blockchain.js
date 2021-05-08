@@ -22,6 +22,11 @@ class Blockchain {
         if (JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) {
             return false;
         }
+
+        if (chain.find((block, index) => index && Math.abs(block.difficulty - chain[index - 1].difficulty) > 1)) {
+            return false;
+        }
+
         return chain
             .find((block, index) => index && ((block.lastHash !== chain[index - 1].hash) ||
                 (cryptoHash(block.data, block.lastHash, block.timestamp, block.difficulty, block.nonce) !== block.hash))) ?
