@@ -1,7 +1,9 @@
 const express = require('express');
 const request = require('request');
+const path = require('path');
+
 const Blockchain = require('./blockchain');
-const PubSub = require('./pubsub');
+const PubSub = require('./app/pubsub');
 
 const app = express();
 const blockchain = new Blockchain();
@@ -24,6 +26,10 @@ app.post('/api/mine', (req, res) => {
     pubsub.broadcastChain();
 
     res.redirect('/api/blocks');
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './client/index.html'));
 });
 
 const syncChain = () => {
