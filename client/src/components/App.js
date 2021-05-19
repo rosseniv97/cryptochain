@@ -1,5 +1,10 @@
 import React, { Component } from "react";
+import { Layout, Car, Row, Col } from "antd";
+import CarItem from "./CarItem";
+import "../../style/index.css";
+import "antd/dist/antd.css";
 
+const { Header, Content, Footer } = Layout;
 class App extends Component {
   state = {
     userInfo: {
@@ -9,15 +14,50 @@ class App extends Component {
   };
 
   render() {
-    const { id, name } = this.state.userInfo;
+    const { id, username } = this.state.userInfo;
 
     return (
-      <div>
-        <div>Welcome to the Blockchain</div>
-
-        <div> Id: {id} </div>
-        <div> Name: {name} </div>
-      </div>
+      <Layout className="layout">
+        <Header></Header>
+        <Content style={{ padding: "10px 50px" }}>
+          <Row>
+            <Col>
+              <CarItem
+                status="available"
+                fuelLevel={10}
+                image={{
+                  src: "chevy.jpg",
+                  name: "Chevrolet Volt",
+                  number: "CA1444HT",
+                }}
+              />
+            </Col>
+            <Col>
+              <CarItem
+                status="available"
+                fuelLevel={10}
+                image={{
+                  src: "chevy.jpg",
+                  name: "Chevrolet Volt",
+                  number: "CA1444HT",
+                }}
+              />
+            </Col>
+            <Col>
+              <CarItem
+                status="available"
+                fuelLevel={10}
+                image={{
+                  src: "chevy.jpg",
+                  name: "Chevrolet Volt",
+                  number: "CA1444HT",
+                }}
+              />
+            </Col>
+          </Row>
+        </Content>
+        <Footer style={{ textAlign: "center" }}></Footer>
+      </Layout>
     );
   }
 }
