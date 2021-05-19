@@ -13,8 +13,7 @@ class CarItem extends Component {
   render() {
     return (
       <Card
-        hoverable
-        style={{ width: 240, margin: "10px" }}
+        {...this.props.customStyle}
         cover={<img alt={this.props.image.name} src={this.props.image.src} />}
       >
         <div
