@@ -9,8 +9,8 @@
         "dev": "npm run dev-client & npm run start-redis && nodemon index.js",
         "dev-peer": "cross-env GENERATE_PEER_PORT='true' nodemon index.js",
         "start-redis": "redis-server --daemonize yes",
-        "build-client": "npm run clean && parcel build client/src/index.html --out-dir client/dist",
-        "dev-client": "npm run clean && parcel client/src/index.html --out-dir client/dist",
+        "build-client": "npm run clean && parcel build client/assets/index.html --out-dir client/dist",
+        "dev-client": "npm run clean && parcel client/assets/index.html client/assets/images/*.jpg --out-dir client/dist",
         "clean": "rm -rf .cache client/dist"
     },
     "keywords": [],

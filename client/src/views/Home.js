@@ -23,7 +23,7 @@ const HomeView = (props) => {
                   style: { width: 240, margin: "10px" },
                 }}
                 image={{
-                  src: "chevy.jpg",
+                  src: "images/chevy.jpg",
                   name: "Chevrolet Volt",
                   number: "CA1444HT",
                 }}
@@ -39,7 +39,7 @@ const HomeView = (props) => {
                 style: { width: 240, margin: "10px" },
               }}
               image={{
-                src: "chevy.jpg",
+                src: "images/chevy.jpg",
                 name: "Chevrolet Volt",
                 number: "CA1444HT",
               }}
@@ -54,7 +54,7 @@ const HomeView = (props) => {
                 style: { width: 240, margin: "10px" },
               }}
               image={{
-                src: "chevy.jpg",
+                src: "images/chevy.jpg",
                 name: "Chevrolet Volt",
                 number: "CA1444HT",
               }}
