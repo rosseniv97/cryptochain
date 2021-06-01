@@ -1,11 +1,13 @@
+import moment from "moment";
 import React, { Component } from "react";
-import { Layout, Row, Col, Form, Input, InputNumber, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Layout, Form, Input, DatePicker, Space, Button, Select } from "antd";
+
 import CarItem from "../components/CarItem";
 import "../../style/index.css";
 import "antd/dist/antd.css";
 
 const { Header, Content, Footer } = Layout;
+const { RangePicker } = DatePicker;
 
 const layout = {
   labelCol: { span: 8 },
@@ -25,7 +27,30 @@ const validateMessages = {
 };
 /* eslint-enable no-template-curly-in-string */
 
+const range = (start, end) => {
+  const result = [];
+  for (let i = start; i < end; i++) {
+    result.push(i);
+  }
+  return result;
+};
+
+const disabledDate = (current) => {
+  // Can not select days before today and today
+  return current && current < moment().endOf("day");
+};
+
+const disabledDateTime = () => {
+  return {
+    //disabledHours: () => range(0, 24).splice(4, 20),
+    disabledMinutes: () => range(30, 60),
+    disabledSeconds: () => [55, 56],
+  };
+};
+
 const CarView = (props) => {
+  const { status, fuelLevel, name, number, src } = props.location.state;
+
   return (
     <Layout className="layout">
       <Header></Header>
@@ -38,16 +63,16 @@ const CarView = (props) => {
         }}
       >
         <CarItem
-          status="available"
-          fuelLevel={10}
+          status={status}
+          fuelLevel={fuelLevel}
           customStyle={{
             hoverable: false,
             style: { width: 540, margin: "10px" },
           }}
           image={{
-            src: "images/chevy.jpg",
-            name: "Chevrolet Volt",
-            number: "CA1444HT",
+            src,
+            name,
+            number,
           }}
         />
 
@@ -56,31 +81,36 @@ const CarView = (props) => {
           name="nest-messages"
           validateMessages={validateMessages}
         >
-          <Form.Item
-            name={["user", "name"]}
-            label="Name"
-            rules={[{ required: true }]}
-          >
+          <Form.Item name={["user", "id"]} label="Employee ID">
             <Input />
           </Form.Item>
-          <Form.Item
-            name={["user", "email"]}
-            label="Email"
-            rules={[{ type: "email" }]}
-          >
-            <Input />
+          <Form.Item label="Take or Return">
+            <Select onChange={(values) => console.log(values)}>
+              <Select.Option value="1">Take</Select.Option>
+              <Select.Option value="2">Return</Select.Option>
+            </Select>
           </Form.Item>
           <Form.Item
-            name={["user", "age"]}
-            label="Age"
-            rules={[{ type: "number", min: 0, max: 99 }]}
+            name={["car", "number"]}
+            label="Car Number"
+            rules={[{ min: 8, max: 8 }]}
           >
-            <InputNumber />
+            <Input style={{ width: "50%" }} defaultValue={number} />
           </Form.Item>
-          <Form.Item name={["user", "website"]} label="Website">
-            <Input />
+          <Form.Item
+            name={["date"]}
+            label="Date of return"
+          >
+            <Space direction="vertical" size={12}>
+              <DatePicker
+                format="YYYY-MM-DD HH:mm:ss"
+                disabledDate={disabledDate}
+                disabledTime={disabledDateTime}
+                showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }}
+              />
+            </Space>
           </Form.Item>
-          <Form.Item name={["user", "introduction"]} label="Introduction">
+          <Form.Item name={["user", "information"]} label="Other Information: ">
             <Input.TextArea />
           </Form.Item>
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
