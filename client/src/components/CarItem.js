@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, Progress } from "antd";
+import { withRouter } from "react-router";
 
 class CarItem extends Component {
   constructor(props) {
@@ -10,11 +11,27 @@ class CarItem extends Component {
     };
   }
 
+  handleCarSelection = () => {
+    const { status, fuelLevel, src, name, number, history } = this.props;
+
+    history.push({
+      pathname: "/viewcar",
+      state: {
+        status,
+        fuelLevel,
+        src,
+        name,
+        number,
+      },
+    });
+  };
+
   render() {
     return (
       <Card
         {...this.props.customStyle}
-        cover={<img alt={this.props.image.name} src={this.props.image.src} />}
+        onClick={this.handleCarSelection}
+        cover={<img alt={this.props.name} src={this.props.src} />}
       >
         <div
           style={{
@@ -23,20 +40,24 @@ class CarItem extends Component {
             fontSize: "25px",
           }}
         >
-          {this.props.image.name}
+          {this.props.name}
         </div>
-        <div
-          style={{
-            border: "2px solid green",
-            borderRadius: "5px",
-            textAlign: "center",
-            fontFamily: "sans-serif",
-            fontSize: "20px",
-          }}
-        >
-          {this.state.status}
-        </div>
-        <div style={{ textAlign: "center" }}>{this.props.image.number}</div>
+        {this.props.history.location.pathname === "/view-taken-cars" ? (
+          ""
+        ) : (
+          <div
+            style={{
+              border: `2px solid ${this.state.status === "taken" ? "red" : "green"}`,
+              borderRadius: "5px",
+              textAlign: "center",
+              fontFamily: "sans-serif",
+              fontSize: "20px",
+            }}
+          >
+            {this.state.status}
+          </div>
+        )}
+        <div style={{ textAlign: "center" }}>{this.props.number}</div>
 
         <div style={{ textAlign: "center", marginTop: 10 }}>
           <Progress type="circle" percent={this.state.fuelLevel} />
@@ -46,4 +67,4 @@ class CarItem extends Component {
   }
 }
 
-export default CarItem;
+export default withRouter(CarItem);

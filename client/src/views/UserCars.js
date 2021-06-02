@@ -6,7 +6,7 @@ import CarsList from "./CarsList";
 import "../../style/index.css";
 import "antd/dist/antd.css";
 
-const HomeView = (props) => {
+const UserCarsView = (props) => {
   //Here is the place to fetch cars' data
 
   const cars = [
@@ -20,14 +20,6 @@ const HomeView = (props) => {
     },
     {
       id: 2,
-      status: "available",
-      fuelLevel: 10,
-      src: "images/renault-captur.jpg",
-      name: "Renault Capture",
-      number: "CB2736PM",
-    },
-    {
-      id: 3,
       status: "taken",
       fuelLevel: 50,
       src: "images/mazdaCX-5.jpg",
@@ -48,4 +40,4 @@ const HomeView = (props) => {
   );
 };
 
-export default HomeView;
+export default UserCarsView;
