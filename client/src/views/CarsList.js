@@ -16,6 +16,7 @@ const CarsList = (props) => {
           <CarItem
             key={id}
             status={status}
+            disabled = {status === 'taken'}
             fuelLevel={fuelLevel}
             customStyle={customStyle}
             src={src}

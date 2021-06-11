@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Progress } from "antd";
 import { withRouter } from "react-router";
+import { useLastLocation } from 'react-router-last-location';
 
 class CarItem extends Component {
   constructor(props) {
@@ -27,10 +28,11 @@ class CarItem extends Component {
   };
 
   render() {
+
     return (
       <Card
         {...this.props.customStyle}
-        onClick={this.handleCarSelection}
+        onClick={ this.props.location.pathname === '/' ? this.state.status ==='available' ? this.handleCarSelection : null : this.handleCarSelection}
         cover={<img alt={this.props.name} src={this.props.src} />}
       >
         <div
@@ -42,7 +44,7 @@ class CarItem extends Component {
         >
           {this.props.name}
         </div>
-        {this.props.history.location.pathname === "/view-taken-cars" ? (
+        {this.props.history.location.pathname !== "/" ? (
           ""
         ) : (
           <div

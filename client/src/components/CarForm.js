@@ -1,6 +1,9 @@
 import moment from "moment";
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Input, DatePicker, Space, Button, Select } from "antd";
+import { withRouter } from "react-router";
+import { useLastLocation } from 'react-router-last-location';
+
 
 import "../../style/index.css";
 import "antd/dist/antd.css";
@@ -44,19 +47,34 @@ const disabledDateTime = () => {
   };
 };
 
-const CarForm = (props) => {
-  
-  const { status, fuelLevel, name, number, src } = props.location.state;
+const onStatusChange = (e) => {
+  console.log(e);
+};
 
+const CarForm = (props) => {
+  const { status, fuelLevel, name, number, src } = props.location.state;
+  const [form] = Form.useForm();
+  const lastLocation = useLastLocation();
+
+  useEffect(() => {});
   return (
-    <Form {...layout} name="nest-messages" validateMessages={validateMessages}>
+    <Form
+      {...layout}
+      name="nest-messages"
+      validateMessages={validateMessages}
+      onFinish={(e) => onStatusChange(e)}
+    >
       <Form.Item name={["user", "id"]} label="Employee ID">
         <Input />
       </Form.Item>
-      <Form.Item label="Take or Return">
-        <Select onChange={(values) => console.log(values)}>
-          <Select.Option value="1">Take</Select.Option>
-          <Select.Option value="2">Return</Select.Option>
+      <Form.Item label="Take or Return" name={"status"}>
+        <Select
+          onChange={(values) => console.log(values)}
+          defaultValue={lastLocation.pathname === "/view-taken-cars" ? "1" : "2"}
+          disabled
+        >
+          <Select.Option value="1">Return</Select.Option>
+          <Select.Option value="2">Take</Select.Option>
         </Select>
       </Form.Item>
       <Form.Item
@@ -88,4 +106,4 @@ const CarForm = (props) => {
   );
 };
 
-export default CarForm;
+export default withRouter(CarForm);
