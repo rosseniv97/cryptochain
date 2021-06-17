@@ -2,9 +2,6 @@ import React from "react";
 import { Layout } from "antd";
 import NavBar from "./NavBar";
 
-import "../../style/index.css";
-import "antd/dist/antd.css";
-
 const { Header, Content, Footer } = Layout;
 
 const PageLayout = (props) => {

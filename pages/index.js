@@ -1,11 +1,25 @@
 import React from "react";
 
-import PageLayout from "../components/PageLayout";
-import CarsList from "./CarsList";
+import PageLayout from "../client/src/components/PageLayout";
+import CarsList from "../client/src/views/CarsList";
 
 const HomeView = (props) => {
-  //Here is the place to fetch cars' data
+  return (
+    <PageLayout>
+      <CarsList
+        carsList={props.cars}
+        customStyle={{
+          hoverable: true,
+          style: { width: 240, margin: "10px" },
+        }}
+      />
+    </PageLayout>
+  );
+};
 
+export async function getServerSideProps() {
+  //Here is the place to fetch cars' data
+  
   const cars = [
     {
       id: 1,
@@ -32,17 +46,10 @@ const HomeView = (props) => {
       number: "CB2333PM",
     },
   ];
-  return (
-    <PageLayout>
-      <CarsList
-        carsList={cars}
-        customStyle={{
-          hoverable: true,
-          style: { width: 240, margin: "10px" },
-        }}
-      />
-    </PageLayout>
-  );
-};
+
+  return {
+    props: {cars}
+  }
+}
 
 export default HomeView;

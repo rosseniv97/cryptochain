@@ -3,9 +3,6 @@ import React from "react";
 import PageLayout from "../components/PageLayout";
 import CarsList from "./CarsList";
 
-import "../../style/index.css";
-import "antd/dist/antd.css";
-
 const UserCarsView = (props) => {
   //Here is the place to fetch cars' data
 

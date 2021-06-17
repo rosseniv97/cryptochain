@@ -7,9 +7,6 @@ import CarItem from "../components/CarItem";
 import PageLayout from "../components/PageLayout";
 import CarForm from "../components/CarForm";
 
-import "../../style/index.css";
-import "antd/dist/antd.css";
-
 const CarView = (props) => {
   const { status, fuelLevel, name, number, src } = props.location.state;
 

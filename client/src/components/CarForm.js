@@ -1,12 +1,7 @@
 import moment from "moment";
 import React, { useEffect } from "react";
-import { Form, Input, DatePicker, Space, Button, Select } from "antd";
-import { withRouter } from "react-router";
-import { useLastLocation } from 'react-router-last-location';
-
-
-import "../../style/index.css";
-import "antd/dist/antd.css";
+import { Form, Input, DatePicker, Button } from "antd";
+import axios from "axios";
 
 /* eslint-enable no-template-curly-in-string */
 
@@ -47,55 +42,46 @@ const disabledDateTime = () => {
   };
 };
 
-const onStatusChange = (e) => {
-  console.log(e);
-};
-
 const CarForm = (props) => {
-  const { status, fuelLevel, name, number, src } = props.location.state;
-  const [form] = Form.useForm();
-  const lastLocation = useLastLocation();
+  const onStatusChange = (formData) => {
+    const data = {
+      action: status === 'taken' ? 'return' : status === 'available' ? 'take' : null,
+      number: number,
+      date: formData.date.format(),
+      user: {
+        information: formData.user.information,
+        id: formData.user.id
+      }
+    }
+    
+    axios.post('http://localhost:3000/api/mine', {data: data}).then((response) => {
+      console.log(response.data)
+    })
 
-  useEffect(() => {});
+  };
+  const { status, fuelLevel, name, number, src } = props;
+  const [form] = Form.useForm();
+  
   return (
     <Form
       {...layout}
       name="nest-messages"
       validateMessages={validateMessages}
-      onFinish={(e) => onStatusChange(e)}
+      onFinish={onStatusChange}
     >
       <Form.Item name={["user", "id"]} label="Employee ID">
         <Input />
       </Form.Item>
-      <Form.Item label="Take or Return" name={"status"}>
-        <Select
-          onChange={(values) => console.log(values)}
-          defaultValue={lastLocation.pathname === "/view-taken-cars" ? "1" : "2"}
-          disabled
-        >
-          <Select.Option value="1">Return</Select.Option>
-          <Select.Option value="2">Take</Select.Option>
-        </Select>
-      </Form.Item>
-      <Form.Item
-        name={["car", "number"]}
-        label="Car Number"
-        rules={[{ min: 8, max: 8 }]}
-      >
-        <Input style={{ width: "50%" }} defaultValue={number} />
-      </Form.Item>
-      <Form.Item name={["date"]} label="Date of return">
-        <Space direction="vertical" size={12}>
+      <Form.Item name={["date"]} label="Date of return" >
           <DatePicker
             format="YYYY-MM-DD HH:mm:ss"
             disabledDate={disabledDate}
             disabledTime={disabledDateTime}
             showTime={{ defaultValue: moment("00:00:00", "HH:mm:ss") }}
           />
-        </Space>
       </Form.Item>
       <Form.Item name={["user", "information"]} label="Other Information: ">
-        <Input.TextArea />
+        <Input.TextArea name="information"/>
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
         <Button type="primary" htmlType="submit">
@@ -103,7 +89,8 @@ const CarForm = (props) => {
         </Button>
       </Form.Item>
     </Form>
+    
   );
 };
 
-export default withRouter(CarForm);
+export default CarForm;
